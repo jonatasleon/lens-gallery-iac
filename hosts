@@ -1,0 +1,15 @@
+[webapp]
+172.17.177.40
+
+[database]
+172.17.177.42
+
+[all:vars]
+ansible_user=vagrant
+ansible_python_interpreter=/usr/bin/python3
+
+[webapp:vars]
+ansible_ssh_private_key_file=".vagrant/machines/webapp/virtualbox/private_key"
+
+[database:vars]
+ansible_ssh_private_key_file=".vagrant/machines/database/virtualbox/private_key"

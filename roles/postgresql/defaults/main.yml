@@ -1,0 +1,5 @@
+---
+db_name: lens
+db_user_name: lens
+db_user_password: lens
+postgresql_conf_dir: /etc/postgresql/12/main

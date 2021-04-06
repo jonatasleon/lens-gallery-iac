@@ -1,0 +1,15 @@
+---
+- hosts: all
+  tasks:
+    - name: Setup python3
+      alternatives:
+        name: python
+        link: /usr/bin/python
+        path: /usr/bin/python3
+      become: yes
+- hosts: database
+  roles:
+    - postgresql
+- hosts: webapp
+  roles:
+    - application

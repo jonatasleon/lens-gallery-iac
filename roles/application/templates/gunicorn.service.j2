@@ -1,0 +1,16 @@
+[Unit]
+Description=Gunicorn instance to serve {{ application_name }}
+After=network.target
+
+[Service]
+User=vagrant
+Group=www-data
+WorkingDirectory={{ application_dir }}
+Environment="PATH={{ application_venv }}/bin"
+Environment="LOG_DIR=."
+Environment="JWT_SECRET_KEY=classified"
+Environment="SQLALCHEMY_DATABASE_URI=sqlite://"
+ExecStart={{ application_venv }}/bin/gunicorn --workers 4 --bind unix:{{ application_name }}.sock -m 007 'core:create_app("production")'
+
+[Install]
+WantedBy=multi-user.target

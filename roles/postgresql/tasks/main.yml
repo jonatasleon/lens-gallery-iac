@@ -1,0 +1,42 @@
+---
+- name: Install PostgreSQL dependencies
+  apt:
+    package:
+      - postgresql-12
+      - python3-psycopg2
+    update_cache: yes
+    cache_valid_time: '3600' # 1 hour
+    state: latest
+  become: yes
+
+- name: Create PostgreSQL database
+  postgresql_db:
+    name: "{{ db_name }}"
+  become: yes
+  become_user: postgres
+
+- name: Create PostgreSQL user
+  postgresql_user:
+    db: "{{ db_name }}"
+    user: "{{ db_user_name }}"
+    password: "{{ db_user_password }}"
+    priv: 'ALL'
+    expires: 'infinity'
+  become: yes
+  become_user: postgres
+
+- name: Set pg_hba.conf
+  template:
+    src: pg_hba.conf.j2
+    dest: "{{ postgresql_conf_dir }}/pg_hba.conf"
+  become: yes
+  notify:
+    - restart postgresql
+
+- name: Set postgresql.conf
+  copy:
+    src: files/postgresql.conf
+    dest: "{{ postgresql_conf_dir }}/postgresql.conf"
+  become: yes
+  notify:
+    - restart postgresql

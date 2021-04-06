@@ -1,0 +1,5 @@
+---
+application_name: lens-gallery-api
+application_dir: "/home/vagrant/{{ application_name }}"
+application_venv: /home/vagrant/venv
+application_repo: "https://github.com/jonatasleon/{{ application_name }}.git"
